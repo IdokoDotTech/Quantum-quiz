@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City and Airport Code Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+    <div id="main-container">
+        <div class="quiz-container">
+            <div id="question-container">
+                <div id="question">Question will appear here</div>
+                <div class="options">
+                    <button class="option">Option 1</button>
+                    <button class="option">Option 2</button>
+                    <button class="option">Option 3</button>
+                    <button class="option">Option 4</button>
+                </div>
+            </div>
+            <div id="navigation">
+                <button id="previous">Previous</button>
+                <button id="next">Next</button>
+                <button id="submit">Submit</button>
+            </div>
+            <div id="status">
+                <div id="score">Score: 0</div>
+                <div id="timer">Time: 30:00</div>
+            </div>
+        </div>
+    </div>
+    <script>
+       // script.js
+
+       const questions = [
+    // BAHRAIN
+    {
+        question: "What is the city code for Bahrain, Bahrain?",
+        options: ["BAH", "THR", "BGW", "BSR"],
+        answer: "BAH"
+    },
+    // IRAN
+    {
+        question: "What is the city code for Abadan, Iran?",
+        options: ["ABD", "BAH", "THR", "BGW"],
+        answer: "ABD"
+    },
+    {
+        question: "What is the city code for Tehran, Iran?",
+        options: ["THR", "ABD", "BAH", "BGW"],
+        answer: "THR"
+    },
+    // IRAQ
+    {
+        question: "What is the city code for Baghdad, Iraq?",
+        options: ["BGW", "THR", "ABD", "BAH"],
+        answer: "BGW"
+    },
+    {
+        question: "What is the city code for Basra, Iraq?",
+        options: ["BSR", "BGW", "THR", "ABD"],
+        answer: "BSR"
+    },
+    // ISRAEL
+    {
+        question: "What is the city code for Tel Aviv, Israel?",
+        options: ["TLV", "BSR", "BGW", "THR"],
+        answer: "TLV"
+    },
+    // JORDAN
+    {
+        question: "What is the city code for Amman, Jordan?",
+        options: ["AMM", "TLV", "BSR", "BGW"],
+        answer: "AMM"
+    },
+    // KUWAIT
+    {
+        question: "What is the city code for Kuwait, Kuwait?",
+        options: ["KWI", "AMM", "TLV", "BSR"],
+        answer: "KWI"
+    },
+    // LEBANON
+    {
+        question: "What is the city code for Beirut, Lebanon?",
+        options: ["BEY", "KWI", "AMM", "TLV"],
+        answer: "BEY"
+    },
+    // OMAN
+    {
+        question: "What is the city code for Muscat, Oman?",
+        options: ["MCT", "BEY", "KWI", "AMM"],
+        answer: "MCT"
+    },
+    // QATAR
+    {
+        question: "What is the city code for Doha, Qatar?",
+        options: ["DOH", "MCT", "BEY", "KWI"],
+        answer: "DOH"
+    },
+    // SAUDI ARABIA
+    {
+        question: "What is the city code for Dhahran, Saudi Arabia?",
+        options: ["DHA", "DOH", "MCT", "BEY"],
+        answer: "DHA"
+    },
+    {
+        question: "What is the city code for Jeddah, Saudi Arabia?",
+        options: ["JED", "DHA", "DOH", "MCT"],
+        answer: "JED"
+    },
+    {
+        question: "What is the city code for Riyadh, Saudi Arabia?",
+        options: ["RUH", "JED", "DHA", "DOH"],
+        answer: "RUH"
+    },
+    // SYRIA
+    {
+        question: "What is the city code for Damascus, Syria?",
+        options: ["DAM", "RUH", "JED", "DHA"],
+        answer: "DAM"
+    },
+    // UNITED ARAB EMIRATES
+    {
+        question: "What is the city code for Abu Dhabi, United Arab Emirates?",
+        options: ["AUH", "DAM", "RUH", "JED"],
+        answer: "AUH"
+    },
+    {
+        question: "What is the city code for Dubai, United Arab Emirates?",
+        options: ["DXB", "AUH", "DAM", "RUH"],
+        answer: "DXB"
+    },
+    // YEMEN, REPUBLIC
+    {
+        question: "What is the city code for Sanaa, Yemen?",
+        options: ["SAH", "DXB", "AUH", "DAM"],
+        answer: "SAH"
+    },
+    {
+        question: "What is the city code for Aden, Yemen?",
+        options: ["AD", "SAH", "DXB", "AUH"],
+        answer: "AD"
+    }
+];
+
+
+
+        let currentQuestionIndex = 0;
+let score = 0;
+let timeRemaining = 1800; // 5 minutes in seconds
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function loadQuestion() {
+
+    const questionElement = document.getElementById('question');
+    const optionElements = document.querySelectorAll('.option');
+
+    const currentQuestion = questions[currentQuestionIndex];
+    questionElement.textContent = currentQuestion.question;
+
+    const shuffledOptions = [...currentQuestion.options];
+    shuffle(shuffledOptions);
+    shuffle(questions)
+    
+
+    optionElements.forEach((optionElement, index) => {
+        optionElement.textContent = shuffledOptions[index];
+        optionElement.onclick = () => {
+            if (shuffledOptions[index] === currentQuestion.answer) {
+                score++;
+                
+            }
+            document.getElementById('score').textContent = `Score: ${score}`;
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                alert(`Quiz completed! Your score is ${score} over ${questions.length}.`);
+            }
+        };
+        optionElement.disabled = false; // Enable option buttons
+    });
+}
+
+function startTimer() {
+    const timerElement = document.getElementById('timer');
+    const interval = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            timerElement.textContent = `Time: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        } else {
+            clearInterval(interval);
+            disableQuestions();
+            alert(`Time's up! Your final score is ${score} over ${questions.length}.`);
+        }
+    }, 1000);
+}
+
+function disableQuestions() {
+    const optionElements = document.querySelectorAll('.option');
+    optionElements.forEach(optionElement => {
+        optionElement.disabled = true; // Disable option buttons
+    });
+}
+
+document.getElementById('next').onclick = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+    }
+};
+
+document.getElementById('previous').onclick = () => {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        score--;
+        loadQuestion();
+    }
+};
+
+document.getElementById('submit').onclick = () => {
+    alert(`Quiz completed! Your final score is ${score} over ${questions.length}.`);
+    disableQuestions();
+};
+
+window.onload = () => {
+    loadQuestion();
+    startTimer();
+};
+    </script>
+</body>
+</html>

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City and Airport Code Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+    <div id="main-container">
+        <div class="quiz-container">
+            <div id="question-container">
+                <div id="question">Question will appear here</div>
+                <div class="options">
+                    <button class="option">Option 1</button>
+                    <button class="option">Option 2</button>
+                    <button class="option">Option 3</button>
+                    <button class="option">Option 4</button>
+                </div>
+            </div>
+            <div id="navigation">
+                <button id="previous">Previous</button>
+                <button id="next">Next</button>
+                <button id="submit">Submit</button>
+            </div>
+            <div id="status">
+                <div id="score">Score: 0</div>
+                <div id="timer">Time: 30:00</div>
+            </div>
+        </div>
+    </div>
+    <script>
+       // script.js
+
+        const questions = [
+            // CANADA
+            {
+                question: "What is the city code for Edmonton, Alberta?",
+                options: ["YEA", "YHZ", "YMQ", "YUL"],
+                answer: "YEA"
+            },
+            {
+                question: "What is the city code for Halifax, Nova Scotia?",
+                options: ["YHZ", "YEA", "YMQ", "YUL"],
+                answer: "YHZ"
+            },
+            {
+                question: "What is the city code for Montreal, Quebec?",
+                options: ["YMQ", "YHZ", "YEA", "YUL"],
+                answer: "YMQ"
+            },
+            {
+                question: "What is the airport code for Dorval, Montreal, Quebec?",
+                options: ["YUL", "YMX", "YOW", "YYZ"],
+                answer: "YUL"
+            },
+            {
+                question: "What is the airport code for Mirabel, Montreal, Quebec?",
+                options: ["YMX", "YUL", "YOW", "YYZ"],
+                answer: "YMX"
+            },
+            {
+                question: "What is the city code for Ottawa, Ontario?",
+                options: ["YOW", "YUL", "YYZ", "YVR"],
+                answer: "YOW"
+            },
+            {
+                question: "What is the city code for Toronto, Ontario?",
+                options: ["YTO", "YYZ", "YVR", "YWG"],
+                answer: "YTO"
+            },
+            {
+                question: "What is the airport code for Pearson International, Toronto, Ontario?",
+                options: ["YYZ", "YTO", "YVR", "YWG"],
+                answer: "YYZ"
+            },
+            {
+                question: "What is the city code for Vancouver, British Columbia?",
+                options: ["YVR", "YYZ", "YTO", "YWG"],
+                answer: "YVR"
+            },
+            {
+                question: "What is the city code for Winnipeg, Manitoba?",
+                options: ["YWG", "YVR", "YYZ", "YTO"],
+                answer: "YWG"
+            },
+            // UNITED STATES-USA
+            {
+                question: "What is the city code for Anchorage, Alaska?",
+                options: ["ANC", "ATL", "BOS", "CHI"],
+                answer: "ANC"
+            },
+            {
+                question: "What is the city code for Atlanta, Georgia?",
+                options: ["ATL", "ANC", "BOS", "CHI"],
+                answer: "ATL"
+            },
+            {
+                question: "What is the city code for Boston, Massachusetts?",
+                options: ["BOS", "ORD", "CHI", "ATL"],
+                answer: "BOS"
+            },
+            {
+                question: "What is the city code for Chicago, Illinois?",
+                options: ["CHI", "ORD", "BOS", "ATL"],
+                answer: "CHI"
+            },
+            {
+                question: "What is the airport code for Midway, Chicago, Illinois?",
+                options: ["MDW", "ORD", "CLE", "DAL"],
+                answer: "MDW"
+            },
+            {
+                question: "What is the airport code for O'Hare, Chicago, Illinois?",
+                options: ["ORD", "MDW", "CLE", "DAL"],
+                answer: "ORD"
+            },
+            {
+                question: "What is the city code for Cleveland, Ohio?",
+                options: ["CLE", "MDW", "ORD", "DAL"],
+                answer: "CLE"
+            },
+            {
+                question: "What is the city code for Dallas, Texas?",
+                options: ["DAL", "DFW", "DEN", "DTT"],
+                answer: "DAL"
+            },
+            {
+                question: "What is the airport code for Forth Worth, Dallas, Texas?",
+                options: ["DFW", "DAL", "DEN", "DTT"],
+                answer: "DFW"
+            },
+            {
+                question: "What is the city code for Denver, Colorado?",
+                options: ["DEN", "DFW", "DAL", "DTT"],
+                answer: "DEN"
+            },
+            {
+                question: "What is the city code for Detroit, Michigan?",
+                options: ["DTT", "DEN", "DFW", "DAL"],
+                answer: "DTT"
+            },
+            {
+                question: "What is the city code for Houston, Texas?",
+                options: ["HOU", "LAX", "MIA", "MSP"],
+                answer: "HOU"
+            },
+            {
+                question: "What is the city code for Los Angeles, California?",
+                options: ["LAX", "HOU", "MIA", "MSP"],
+                answer: "LAX"
+            },
+            {
+                question: "What is the city code for Miami, Florida?",
+                options: ["MIA", "MSP", "MSY", "NYC"],
+                answer: "MIA"
+            },
+            {
+                question: "What is the city code for Minneapolis, Minnesota?",
+                options: ["MSP", "MIA", "MSY", "NYC"],
+                answer: "MSP"
+            },
+            {
+                question: "What is the city code for New Orleans, Louisiana?",
+                options: ["MSY", "NYC", "PHL", "STL"],
+                answer: "MSY"
+            },
+            {
+                question: "What is the city code for New York, New York?",
+                options: ["NYC", "MSY", "PHL", "STL"],
+                answer: "NYC"
+            },
+            {
+                question: "What is the airport code for John F. Kennedy, New York, New York?",
+                options: ["JFK", "LGA", "EWR", "PHL"],
+                answer: "JFK"
+            },
+            {
+                question: "What is the airport code for La Guardia, New York, New York?",
+                options: ["LGA", "JFK", "EWR", "PHL"],
+                answer: "LGA"
+            },
+            {
+                question: "What is the airport code for Newark, New York, New York?",
+                options: ["EWR", "LGA", "JFK", "PHL"],
+                answer: "EWR"
+            },
+            {
+                question: "What is the city code for Philadelphia, Pennsylvania?",
+                options: ["PHL", "EWR", "LGA", "JFK"],
+                answer: "PHL"
+            },
+            {
+                question: "What is the city code for St. Louis, Missouri?",
+                options: ["STL", "PHL", "EWR", "LGA"],
+                answer: "STL"
+            },
+            {
+                question: "What is the city code for San Francisco, California?",
+                options: ["SFO", "STL", "PHL", "SEA"],
+                answer: "SFO"
+            },
+            {
+                question: "What is the city code for Seattle, Washington?",
+                options: ["SEA", "SFO", "STL", "PHL"],
+                answer: "SEA"
+            },
+            {
+                question: "What is the city code for Washington, District of Columbia?",
+                options: ["WAS", "SEA", "SFO", "STL"],
+                answer: "WAS"
+            },
+            {
+                question: "What is the airport code for Dulles International, Washington, District of Columbia?",
+                options: ["IAD", "DCA", "BWI", "SJU"],
+                answer: "IAD"
+            },
+            {
+                question: "What is the airport code for National, Washington, District of Columbia?",
+                options: ["DCA", "IAD", "BWI", "SJU"],
+                answer: "DCA"
+            },
+            {
+                question: "What is the airport code for Baltimore, Maryland?",
+                options: ["BWI", "DCA", "IAD", "SJU"],
+                answer: "BWI"
+            },
+            // BERMUDA
+            {
+                question: "What is the city code for Hamilton, Bermuda?",
+                options: ["BDA", "BWI", "DCA", "IAD"],
+                answer: "BDA"
+            },
+            // ANTIGUA
+            {
+                question: "What is the city code for Antigua, Antigua?",
+                options: ["ANU", "BDA", "BWI", "DCA"],
+                answer: "ANU"
+            },
+            // BAHAMAS
+            {
+                question: "What is the city code for Freeport, Bahamas?",
+                options: ["FPO", "ANU", "BDA", "BWI"],
+                answer: "FPO"
+            },
+            {
+                question: "What is the city code for Nassau, Bahamas?",
+                options: ["NAS", "FPO", "ANU", "BDA"],
+                answer: "NAS"
+            },
+            // BARBADOS
+            {
+                question: "What is the city code for Bridgetown, Barbados?",
+                options: ["BGI", "NAS", "FPO", "ANU"],
+                answer: "BGI"
+            },
+            // BELIZE
+            {
+                question: "What is the city code for Belize, Belize?",
+                options: ["BZE", "BGI", "NAS", "FPO"],
+                answer: "BZE"
+            },
+            // CAYMAN ISLANDS
+            {
+                question: "What is the city code for Grand Cayman, Cayman Islands?",
+                options: ["GCM", "BZE", "BGI", "NAS"],
+                answer: "GCM"
+            },
+            // COSTA RICA
+            {
+                question: "What is the city code for San Jose, Costa Rica?",
+                options: ["SJO", "GCM", "BZE", "BGI"],
+                answer: "SJO"
+            },
+            // CUBA
+            {
+                question: "What is the city code for Havana, Cuba?",
+                options: ["HAV", "SJO", "GCM", "BZE"],
+                answer: "HAV"
+            },
+            // DOMINICAN REPUBLIC
+            {
+                question: "What is the city code for Santo Domingo, Dominican Republic?",
+                options: ["SDQ", "HAV", "SJO", "GCM"],
+                answer: "SDQ"
+            },
+            // EL SALVADOR
+            {
+                question: "What is the city code for San Salvador, El Salvador?",
+                options: ["SAL", "SDQ", "HAV", "SJO"],
+                answer: "SAL"
+            },
+            // FRENCH WEST INDIES
+            {
+                question: "What is the city code for Port de France, Martinique, French West Indies?",
+                options: ["FDF", "SAL", "SDQ", "HAV"],
+                answer: "FDF"
+            },
+            {
+                question: "What is the city code for Pointe-a-Pitre, Guadeloupe, French West Indies?",
+                options: ["PTP", "FDF", "SAL", "SDQ"],
+                answer: "PTP"
+            },
+            // GUATEMALA
+            {
+                question: "What is the city code for Guatemala City, Guatemala?",
+                options: ["GUA", "PTP", "FDF", "SAL"],
+                answer: "GUA"
+            },
+            // HAITI
+            {
+                question: "What is the city code for Port au Prince, Haiti?",
+                options: ["PAP", "GUA", "PTP", "FDF"],
+                answer: "PAP"
+            },
+            // HONDURAS
+            {
+                question: "What is the city code for Tegucigalpa, Honduras?",
+                options: ["TGU", "PAP", "GUA", "PTP"],
+                answer: "TGU"
+            },
+            // JAMAICA
+            {
+                question: "What is the city code for Kingston, Jamaica?",
+                options: ["KIN", "TGU", "PAP", "GUA"],
+                answer: "KIN"
+            },
+            {
+                question: "What is the city code for Montego Bay, Jamaica?",
+                options: ["MBJ", "KIN", "TGU", "PAP"],
+                answer: "MBJ"
+            },
+            // MEXICO
+            {
+                question: "What is the city code for Acapulco, Mexico?",
+                options: ["ACA", "MBJ", "KIN", "TGU"],
+                answer: "ACA"
+            },
+            {
+                question: "What is the city code for Guadalajara, Mexico?",
+                options: ["GDL", "ACA", "MBJ", "KIN"],
+                answer: "GDL"
+            },
+            {
+                question: "What is the city code for Mexico City, Mexico?",
+                options: ["MEX", "GDL", "ACA", "MBJ"],
+                answer: "MEX"
+            },
+            // NETHERLANDS ANTILLES
+            {
+                question: "What is the city code for Curacao, Netherlands Antilles?",
+                options: ["CUR", "MEX", "GDL", "ACA"],
+                answer: "CUR"
+            },
+            // NICARAGUA
+            {
+                question: "What is the city code for Managua, Nicaragua?",
+                options: ["MGA", "CUR", "MEX", "GDL"],
+                answer: "MGA"
+            },
+            // PANAMA
+            {
+                question: "What is the city code for Panama City, Panama?",
+                options: ["PTY", "MGA", "CUR", "MEX"],
+                answer: "PTY"
+            },
+            // PUERTO RICO (USA)
+            {
+                question: "What is the city code for San Juan, Puerto Rico (USA)?",
+                options: ["SJU", "PTY", "MGA", "CUR"],
+                answer: "SJU"
+            },
+            // TRINIDAD & TOBAGO
+            {
+                question: "What is the city code for Port of Spain, Trinidad & Tobago?",
+                options: ["POS", "SJU", "PTY", "MGA"],
+                answer: "POS"
+            },
+            // VIRGIN ISLANDS USA
+            {
+                question: "What is the city code for St. Croix, Virgin Islands USA?",
+                options: ["STX", "POS", "SJU", "PTY"],
+                answer: "STX"
+            },
+            // ARGENTINA
+            {
+                question: "What is the city code for Buenos Aires, Argentina?",
+                options: ["BUE", "STX", "POS", "SJU"],
+                answer: "BUE"
+            },
+            {
+                question: "What is the airport code for Ministro Pistarini, Buenos Aires, Argentina?",
+                options: ["EZE", "BUE", "STX", "POS"],
+                answer: "EZE"
+            },
+            {
+                question: "What is the city code for Cordoba, Argentina?",
+                options: ["COR", "EZE", "BUE", "STX"],
+                answer: "COR"
+            },
+            {
+                question: "What is the airport code for Aeroparque Jorge Newbery, Cordoba, Argentina?",
+                options: ["AEP", "COR", "EZE", "BUE"],
+                answer: "AEP"
+            },
+            // BOLIVIA
+            {
+                question: "What is the city code for La Paz, Bolivia?",
+                options: ["LPB", "AEP", "COR", "EZE"],
+                answer: "LPB"
+            },
+            // BRAZIL
+            {
+                question: "What is the city code for Brasilia, Brazil?",
+                options: ["BSB", "LPB", "AEP", "COR"],
+                answer: "BSB"
+            },
+            {
+                question: "What is the city code for Manaus, Brazil?",
+                options: ["MAO", "BSB", "LPB", "AEP"],
+                answer: "MAO"
+            },
+            {
+                question: "What is the city code for Recife, Brazil?",
+                options: ["REC", "MAO", "BSB", "LPB"],
+                answer: "REC"
+            },
+            {
+                question: "What is the city code for Rio de Janeiro, Brazil?",
+                options: ["RIO", "REC", "MAO", "BSB"],
+                answer: "RIO"
+            },
+            {
+                question: "What is the airport code for Galeao International, Rio de Janeiro, Brazil?",
+                options: ["GIG", "RIO", "REC", "MAO"],
+                answer: "GIG"
+            },
+            {
+                question: "What is the airport code for Santos Dumont, Rio de Janeiro, Brazil?",
+                options: ["SDU", "GIG", "RIO", "REC"],
+                answer: "SDU"
+            },
+            {
+                question: "What is the city code for Sao Paulo, Brazil?",
+                options: ["SAO", "SDU", "GIG", "RIO"],
+                answer: "SAO"
+            },
+            {
+                question: "What is the airport code for Congonhas, Sao Paulo, Brazil?",
+                options: ["CGH", "SAO", "SDU", "GIG"],
+                answer: "CGH"
+            },
+            {
+                question: "What is the airport code for Guarulhos International, Sao Paulo, Brazil?",
+                options: ["GRU", "CGH", "SAO", "SDU"],
+                answer: "GRU"
+            },
+            {
+                question: "What is the airport code for Viracopos, Sao Paulo, Brazil?",
+                options: ["VCP", "GRU", "CGH", "SAO"],
+                answer: "VCP"
+            },
+            // CHILE
+            {
+                question: "What is the city code for Santiago De Chile, Chile?",
+                options: ["SCL", "VCP", "GRU", "CGH"],
+                answer: "SCL"
+            },
+            // COLOMBIA
+            {
+                question: "What is the city code for Barranquilla, Colombia?",
+                options: ["BAQ", "SCL", "VCP", "GRU"],
+                answer: "BAQ"
+            },
+            {
+                question: "What is the city code for Bogota, Colombia?",
+                options: ["BOG", "BAQ", "SCL", "VCP"],
+                answer: "BOG"
+            },
+            // ECUADOR
+            {
+                question: "What is the city code for Guayaquil, Ecuador?",
+                options: ["GYE", "BOG", "BAQ", "SCL"],
+                answer: "GYE"
+            },
+            {
+                question: "What is the city code for Quito, Ecuador?",
+                options: ["UIO", "GYE", "BOG", "BAQ"],
+                answer: "UIO"
+            },
+            // FRENCH GUIANA
+            {
+                question: "What is the city code for Cayenne, French Guiana?",
+                options: ["CAY", "UIO", "GYE", "BOG"],
+                answer: "CAY"
+            },
+            // GUYANA
+            {
+                question: "What is the city code for Georgetown, Guyana?",
+                options: ["GEO", "CAY", "UIO", "GYE"],
+                answer: "GEO"
+            },
+            // PARAGUAY
+            {
+                question: "What is the city code for Asuncion, Paraguay?",
+                options: ["ASU", "GEO", "CAY", "UIO"],
+                answer: "ASU"
+            },
+            // PERU
+            {
+                question: "What is the city code for Lima, Peru?",
+                options: ["LIM", "ASU", "GEO", "CAY"],
+                answer: "LIM"
+            },
+            // SURINAME
+            {
+                question: "What is the city code for Paramaribo, Suriname?",
+                options: ["PBM", "LIM", "ASU", "GEO"],
+                answer: "PBM"
+            },
+            // URUGUAY
+            {
+                question: "What is the city code for Montevideo, Uruguay?",
+                options: ["MVD", "PBM", "LIM", "ASU"],
+                answer: "MVD"
+            },
+            // VENEZUELA
+            {
+                question: "What is the city code for Caracas, Venezuela?",
+                options: ["CCS", "MVD", "PBM", "LIM"],
+                answer: "CCS"
+            },
+            {
+                question: "What is the city code for Maracaibo, Venezuela?",
+                options: ["MAR", "CCS", "MVD", "PBM"],
+                answer: "MAR"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+let score = 0;
+let timeRemaining = 1800; // 5 minutes in seconds
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function loadQuestion() {
+
+    const questionElement = document.getElementById('question');
+    const optionElements = document.querySelectorAll('.option');
+
+    const currentQuestion = questions[currentQuestionIndex];
+    questionElement.textContent = currentQuestion.question;
+
+    const shuffledOptions = [...currentQuestion.options];
+    shuffle(shuffledOptions);
+    shuffle(questions)
+    
+
+    optionElements.forEach((optionElement, index) => {
+        optionElement.textContent = shuffledOptions[index];
+        optionElement.onclick = () => {
+            if (shuffledOptions[index] === currentQuestion.answer) {
+                score++;
+                
+            }
+            document.getElementById('score').textContent = `Score: ${score}`;
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                alert(`Quiz completed! Your score is ${score} over ${questions.length}.`);
+            }
+        };
+        optionElement.disabled = false; // Enable option buttons
+    });
+}
+
+function startTimer() {
+    const timerElement = document.getElementById('timer');
+    const interval = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            timerElement.textContent = `Time: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        } else {
+            clearInterval(interval);
+            disableQuestions();
+            alert(`Time's up! Your final score is ${score} over ${questions.length}.`);
+        }
+    }, 1000);
+}
+
+function disableQuestions() {
+    const optionElements = document.querySelectorAll('.option');
+    optionElements.forEach(optionElement => {
+        optionElement.disabled = true; // Disable option buttons
+    });
+}
+
+document.getElementById('next').onclick = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+    }
+};
+
+document.getElementById('previous').onclick = () => {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        score--;
+        loadQuestion();
+    }
+};
+
+document.getElementById('submit').onclick = () => {
+    alert(`Quiz completed! Your final score is ${score} over ${questions.length}.`);
+    disableQuestions();
+};
+
+window.onload = () => {
+    loadQuestion();
+    startTimer();
+};
+    </script>
+</body>
+</html>

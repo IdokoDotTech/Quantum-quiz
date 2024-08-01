@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City and Airport Code Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+    <div id="main-container">
+        <div class="quiz-container">
+            <div id="question-container">
+                <div id="question">Question will appear here</div>
+                <div class="options">
+                    <button class="option">Option 1</button>
+                    <button class="option">Option 2</button>
+                    <button class="option">Option 3</button>
+                    <button class="option">Option 4</button>
+                </div>
+            </div>
+            <div id="navigation">
+                <button id="previous">Previous</button>
+                <button id="next">Next</button>
+                <button id="submit">Submit</button>
+            </div>
+            <div id="status">
+                <div id="score">Score: 0</div>
+                <div id="timer">Time: 30:00</div>
+            </div>
+        </div>
+    </div>
+    <script>
+       // script.js
+
+       const questions = [
+    // ALBANIA
+    {
+        question: "What is the city code for Tirana, Albania?",
+        options: ["TIA", "EVN", "VIE", "BAK"],
+        answer: "TIA"
+    },
+    // ARMENIA
+    {
+        question: "What is the city code for Yerevan, Armenia?",
+        options: ["EVN", "TIA", "MSQ", "BRU"],
+        answer: "EVN"
+    },
+    // AUSTRIA
+    {
+        question: "What is the city code for Vienna, Austria?",
+        options: ["VIE", "BAK", "SJJ", "SOF"],
+        answer: "VIE"
+    },
+    // AZERBAIJAN
+    {
+        question: "What is the city code for Baku, Azerbaijan?",
+        options: ["BAK", "SJJ", "SOF", "ZAG"],
+        answer: "BAK"
+    },
+    // BELARUS
+    {
+        question: "What is the city code for Minsk, Belarus?",
+        options: ["MSQ", "BRU", "NIC", "LCA"],
+        answer: "MSQ"
+    },
+    // BELGIUM
+    {
+        question: "What is the city code for Brussels, Belgium?",
+        options: ["BRU", "SJJ", "SOF", "ZAG"],
+        answer: "BRU"
+    },
+    // BOSNIA HERCEGOVINA
+    {
+        question: "What is the city code for Sarajevo, Bosnia Hercegovina?",
+        options: ["SJJ", "SOF", "ZAG", "NIC"],
+        answer: "SJJ"
+    },
+    // BULGARIA
+    {
+        question: "What is the city code for Sofia, Bulgaria?",
+        options: ["SOF", "ZAG", "NIC", "LCA"],
+        answer: "SOF"
+    },
+    // CROATIA
+    {
+        question: "What is the city code for Zagreb, Croatia?",
+        options: ["ZAG", "NIC", "LCA", "PRG"],
+        answer: "ZAG"
+    },
+    // CYPRUS
+    {
+        question: "What is the city code for Nicosia, Cyprus?",
+        options: ["NIC", "LCA", "CPH", "TLL"],
+        answer: "NIC"
+    },
+    {
+        question: "What is the city code for Larnaca, Cyprus?",
+        options: ["LCA", "NIC", "CPH", "TLL"],
+        answer: "LCA"
+    },
+    // CZECH REPUBLIC
+    {
+        question: "What is the city code for Prague, Czech Republic?",
+        options: ["PRG", "CPH", "TLL", "HEL"],
+        answer: "PRG"
+    },
+    // DENMARK
+    {
+        question: "What is the city code for Copenhagen, Denmark?",
+        options: ["CPH", "TLL", "HEL", "BOD"],
+        answer: "CPH"
+    },
+    // ESTONIA
+    {
+        question: "What is the city code for Tallinn, Estonia?",
+        options: ["TLL", "HEL", "BOD", "LYS"],
+        answer: "TLL"
+    },
+    // FINLAND
+    {
+        question: "What is the city code for Helsinki, Finland?",
+        options: ["HEL", "BOD", "LYS", "MRS"],
+        answer: "HEL"
+    },
+    // FRANCE
+    {
+        question: "What is the city code for Bordeaux, France?",
+        options: ["BOD", "LYS", "MRS", "NCE"],
+        answer: "BOD"
+    },
+    {
+        question: "What is the city code for Lyon, France?",
+        options: ["LYS", "MRS", "NCE", "PAR"],
+        answer: "LYS"
+    },
+    {
+        question: "What is the city code for Marseille, France?",
+        options: ["MRS", "NCE", "PAR", "CDG"],
+        answer: "MRS"
+    },
+    {
+        question: "What is the city code for Nice, France?",
+        options: ["NCE", "PAR", "CDG", "LBG"],
+        answer: "NCE"
+    },
+    {
+        question: "What is the city code for Paris, France?",
+        options: ["PAR", "CDG", "LBG", "ORY"],
+        answer: "PAR"
+    },
+    {
+        question: "What is the city code for Charles De Gaulle Airport in Paris, France?",
+        options: ["CDG", "LBG", "ORY", "PAR"],
+        answer: "CDG"
+    },
+    {
+        question: "What is the city code for Le Bourget Airport in Paris, France?",
+        options: ["LBG", "CDG", "ORY", "PAR"],
+        answer: "LBG"
+    },
+    {
+        question: "What is the city code for Orly Airport in Paris, France?",
+        options: ["ORY", "CDG", "LBG", "PAR"],
+        answer: "ORY"
+    },
+    // GEORGIA
+    {
+        question: "What is the city code for Tbilisi, Georgia?",
+        options: ["TBS", "BER", "TXL", "SXF"],
+        answer: "TBS"
+    },
+    // GERMANY
+    {
+        question: "What is the city code for Berlin, Germany?",
+        options: ["BER", "TXL", "SXF", "CGN"],
+        answer: "BER"
+    },
+    {
+        question: "What is the city code for Tegel Airport in Berlin, Germany?",
+        options: ["TXL", "SXF", "CGN", "DUS"],
+        answer: "TXL"
+    },
+    {
+        question: "What is the city code for Schoenefeld Airport in Berlin, Germany?",
+        options: ["SXF", "TXL", "CGN", "DUS"],
+        answer: "SXF"
+    },
+    {
+        question: "What is the city code for Cologne, Germany?",
+        options: ["CGN", "DUS", "FRA", "HAM"],
+        answer: "CGN"
+    },
+    {
+        question: "What is the city code for Dusseldorf, Germany?",
+        options: ["DUS", "CGN", "FRA", "HAM"],
+        answer: "DUS"
+    },
+    {
+        question: "What is the city code for Frankfurt, Germany?",
+        options: ["FRA", "HAM", "MUC", "STR"],
+        answer: "FRA"
+    },
+    {
+        question: "What is the city code for Hamburg, Germany?",
+        options: ["HAM", "FRA", "MUC", "STR"],
+        answer: "HAM"
+    },
+    {
+        question: "What is the city code for Munich, Germany?",
+        options: ["MUC", "FRA", "HAM", "STR"],
+        answer: "MUC"
+    },
+    {
+        question: "What is the city code for Stuttgart, Germany?",
+        options: ["STR", "MUC", "HAM", "FRA"],
+        answer: "STR"
+    },
+    // GIBRALTAR
+    {
+        question: "What is the city code for Gibraltar, Gibraltar?",
+        options: ["GIB", "ATH", "BUD", "REK"],
+        answer: "GIB"
+    },
+    // GREECE
+    {
+        question: "What is the city code for Athens, Greece?",
+        options: ["ATH", "BUD", "REK", "DUB"],
+        answer: "ATH"
+    },
+    // HUNGARY
+    {
+        question: "What is the city code for Budapest, Hungary?",
+        options: ["BUD", "ATH", "REK", "DUB"],
+        answer: "BUD"
+    },
+    // ICELAND
+    {
+        question: "What is the city code for Reykjavik, Iceland?",
+        options: ["REK", "BUD", "ATH", "DUB"],
+        answer: "REK"
+    },
+    // IRELAND
+    {
+        question: "What is the city code for Dublin, Ireland?",
+        options: ["DUB", "SNN", "MIL", "NAP"],
+        answer: "DUB"
+    },
+    {
+        question: "What is the city code for Shannon, Ireland?",
+        options: ["SNN", "DUB", "MIL", "NAP"],
+        answer: "SNN"
+    },
+    // ITALY
+    {
+        question: "What is the city code for Milan, Italy?",
+        options: ["MIL", "NAP", "ROM", "CIA"],
+        answer: "MIL"
+    },
+    {
+        question: "What is the city code for Naples, Italy?",
+        options: ["NAP", "MIL", "ROM", "CIA"],
+        answer: "NAP"
+    },
+    {
+        question: "What is the city code for Rome, Italy?",
+        options: ["ROM", "CIA", "FCO", "TRN"],
+        answer: "ROM"
+    },
+    {
+        question: "What is the city code for Ciampino Airport in Rome, Italy?",
+        options: ["CIA", "FCO", "TRN", "VCE"],
+        answer: "CIA"
+    },
+    {
+        question: "What is the city code for Leonardo da Vinci (Fiumicino) Airport in Rome, Italy?",
+        options: ["FCO", "CIA", "TRN", "VCE"],
+        answer: "FCO"
+    },
+    {
+        question: "What is the city code for Turin, Italy?",
+        options: ["TRN", "VCE", "CIA", "FCO"],
+        answer: "TRN"
+    },
+    {
+        question: "What is the city code for Venice, Italy?",
+        options: ["VCE", "TRN", "CIA", "FCO"],
+        answer: "VCE"
+    },
+    // LATVIA
+    {
+        question: "What is the city code for Riga, Latvia?",
+        options: ["RIX", "VNO", "LUX", "SKP"],
+        answer: "RIX"
+    },
+    // LITHUANIA
+    {
+        question: "What is the city code for Vilnius, Lithuania?",
+        options: ["VNO", "RIX", "LUX", "SKP"],
+        answer: "VNO"
+    },
+    // LUXEMBOURG
+    {
+        question: "What is the city code for Luxembourg, Luxembourg?",
+        options: ["LUX", "RIX", "VNO", "SKP"],
+        answer: "LUX"
+    },
+    // MACEDONIA
+    {
+        question: "What is the city code for Skopje, Macedonia?",
+        options: ["SKP", "LUX", "RIX", "VNO"],
+        answer: "SKP"
+    },
+    // MALTA
+    {
+        question: "What is the city code for Malta, Malta?",
+        options: ["MLA", "KIV", "AMS", "RTM"],
+        answer: "MLA"
+    },
+    // MOLDOVA
+    {
+        question: "What is the city code for Kishinev, Moldova?",
+        options: ["KIV", "MLA", "AMS", "RTM"],
+        answer: "KIV"
+    },
+    // NETHERLANDS
+    {
+        question: "What is the city code for Amsterdam, Netherlands?",
+        options: ["AMS", "RTM", "BGO", "OSL"],
+        answer: "AMS"
+    },
+    {
+        question: "What is the city code for Rotterdam, Netherlands?",
+        options: ["RTM", "AMS", "BGO", "OSL"],
+        answer: "RTM"
+    },
+    // NORWAY
+    {
+        question: "What is the city code for Bergen, Norway?",
+        options: ["BGO", "OSL", "WAW", "LIS"],
+        answer: "BGO"
+    },
+    {
+        question: "What is the city code for Oslo, Norway?",
+        options: ["OSL", "BGO", "WAW", "LIS"],
+        answer: "OSL"
+    },
+    // POLAND
+    {
+        question: "What is the city code for Warsaw, Poland?",
+        options: ["WAW", "OSL", "BGO", "LIS"],
+        answer: "WAW"
+    },
+    // PORTUGAL
+    {
+        question: "What is the city code for Lisbon, Portugal?",
+        options: ["LIS", "FNC", "BUH", "MOW"],
+        answer: "LIS"
+    },
+    {
+        question: "What is the city code for Funchal (Madeira), Portugal?",
+        options: ["FNC", "LIS", "BUH", "MOW"],
+        answer: "FNC"
+    },
+    // ROMANIA
+    {
+        question: "What is the city code for Bucharest, Romania?",
+        options: ["BUH", "LIS", "FNC", "MOW"],
+        answer: "BUH"
+    },
+    // RUSSIA
+    {
+        question: "What is the city code for Moscow, Russia?",
+        options: ["MOW", "SVO", "LED", "BTS"],
+        answer: "MOW"
+    },
+    {
+        question: "What is the city code for Sheremetyevo Airport in Moscow, Russia?",
+        options: ["SVO", "MOW", "LED", "BTS"],
+        answer: "SVO"
+    },
+    {
+        question: "What is the city code for St. Petersburg, Russia?",
+        options: ["LED", "MOW", "SVO", "BTS"],
+        answer: "LED"
+    },
+    // SLOVAKIA
+    {
+        question: "What is the city code for Bratislava, Slovakia?",
+        options: ["BTS", "LED", "MOW", "SVO"],
+        answer: "BTS"
+    },
+    // SLOVENIA
+    {
+        question: "What is the city code for Ljubljana, Slovenia?",
+        options: ["LJU", "BTS", "LED", "MOW"],
+        answer: "LJU"
+    },
+    // SPAIN
+    {
+        question: "What is the city code for Barcelona, Spain?",
+        options: ["BCN", "LPA", "MAD", "AGP"],
+        answer: "BCN"
+    },
+    {
+        question: "What is the city code for Las Palmas, Gran Canaria, Spain?",
+        options: ["LPA", "BCN", "MAD", "AGP"],
+        answer: "LPA"
+    },
+    {
+        question: "What is the city code for Madrid, Spain?",
+        options: ["MAD", "BCN", "LPA", "AGP"],
+        answer: "MAD"
+    },
+    {
+        question: "What is the city code for Malaga, Spain?",
+        options: ["AGP", "MAD", "LPA", "BCN"],
+        answer: "AGP"
+    },
+    {
+        question: "What is the city code for Palma de Mallorca, Spain?",
+        options: ["PMI", "AGP", "MAD", "LPA"],
+        answer: "PMI"
+    },
+    {
+        question: "What is the city code for Tenerife, Canary Islands, Spain?",
+        options: ["TCI", "PMI", "AGP", "LPA"],
+        answer: "TCI"
+    },
+    // SWEDEN
+    {
+        question: "What is the city code for Gothenburg, Sweden?",
+        options: ["GOT", "STO", "GVA", "ZRH"],
+        answer: "GOT"
+    },
+    {
+        question: "What is the city code for Stockholm, Sweden?",
+        options: ["STO", "GOT", "GVA", "ZRH"],
+        answer: "STO"
+    },
+    // SWITZERLAND
+    {
+        question: "What is the city code for Geneva, Switzerland?",
+        options: ["GVA", "STO", "GOT", "ZRH"],
+        answer: "GVA"
+    },
+    {
+        question: "What is the city code for Zurich, Switzerland?",
+        options: ["ZRH", "GVA", "STO", "GOT"],
+        answer: "ZRH"
+    },
+    // TURKEY
+    {
+        question: "What is the city code for Ankara, Turkey?",
+        options: ["ANK", "IST", "IEV", "BFS"],
+        answer: "ANK"
+    },
+    {
+        question: "What is the city code for Istanbul, Turkey?",
+        options: ["IST", "ANK", "IEV", "BFS"],
+        answer: "IST"
+    },
+    // UKRAINE
+    {
+        question: "What is the city code for Kiev, Ukraine?",
+        options: ["IEV", "IST", "ANK", "BFS"],
+        answer: "IEV"
+    },
+    // UNITED KINGDOM
+    {
+        question: "What is the city code for Belfast, United Kingdom?",
+        options: ["BFS", "BHX", "EDI", "GLA"],
+        answer: "BFS"
+    },
+    {
+        question: "What is the city code for Birmingham, United Kingdom?",
+        options: ["BHX", "BFS", "EDI", "GLA"],
+        answer: "BHX"
+    },
+    {
+        question: "What is the city code for Edinburgh, United Kingdom?",
+        options: ["EDI", "BFS", "BHX", "GLA"],
+        answer: "EDI"
+    },
+    {
+        question: "What is the city code for Glasgow, United Kingdom?",
+        options: ["GLA", "BFS", "BHX", "EDI"],
+        answer: "GLA"
+    },
+    {
+        question: "What is the city code for London, United Kingdom?",
+        options: ["LON", "LGW", "LHR", "MAN"],
+        answer: "LON"
+    },
+    {
+        question: "What is the city code for Gatwick Airport in London, United Kingdom?",
+        options: ["LGW", "LON", "LHR", "MAN"],
+        answer: "LGW"
+    },
+    {
+        question: "What is the city code for Heathrow Airport in London, United Kingdom?",
+        options: ["LHR", "LON", "LGW", "MAN"],
+        answer: "LHR"
+    },
+    {
+        question: "What is the city code for Manchester, United Kingdom?",
+        options: ["MAN", "LON", "LGW", "LHR"],
+        answer: "MAN"
+    },
+    // YUGOSLAVIA
+    {
+        question: "What is the city code for Belgrade, Yugoslavia?",
+        options: ["BEG", "BFS", "BHX", "EDI"],
+        answer: "BEG"
+    }
+];
+
+        let currentQuestionIndex = 0;
+let score = 0;
+let timeRemaining = 1800; // 5 minutes in seconds
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function loadQuestion() {
+
+    const questionElement = document.getElementById('question');
+    const optionElements = document.querySelectorAll('.option');
+
+    const currentQuestion = questions[currentQuestionIndex];
+    questionElement.textContent = currentQuestion.question;
+
+    const shuffledOptions = [...currentQuestion.options];
+    shuffle(shuffledOptions);
+    shuffle(questions)
+    
+
+    optionElements.forEach((optionElement, index) => {
+        optionElement.textContent = shuffledOptions[index];
+        optionElement.onclick = () => {
+            if (shuffledOptions[index] === currentQuestion.answer) {
+                score++;
+                
+            }
+            document.getElementById('score').textContent = `Score: ${score}`;
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                alert(`Quiz completed! Your score is ${score} over ${questions.length}.`);
+            }
+        };
+        optionElement.disabled = false; // Enable option buttons
+    });
+}
+
+function startTimer() {
+    const timerElement = document.getElementById('timer');
+    const interval = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            timerElement.textContent = `Time: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        } else {
+            clearInterval(interval);
+            disableQuestions();
+            alert(`Time's up! Your final score is ${score} over ${questions.length}.`);
+        }
+    }, 1000);
+}
+
+function disableQuestions() {
+    const optionElements = document.querySelectorAll('.option');
+    optionElements.forEach(optionElement => {
+        optionElement.disabled = true; // Disable option buttons
+    });
+}
+
+document.getElementById('next').onclick = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+    }
+};
+
+document.getElementById('previous').onclick = () => {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        score--;
+        loadQuestion();
+    }
+};
+
+document.getElementById('submit').onclick = () => {
+    alert(`Quiz completed! Your final score is ${score} over ${questions.length}.`);
+    disableQuestions();
+};
+
+window.onload = () => {
+    loadQuestion();
+    startTimer();
+};
+    </script>
+</body>
+</html>

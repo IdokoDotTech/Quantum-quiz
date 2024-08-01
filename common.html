@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>City and Airport Code Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+    <div id="main-container">
+        <div class="quiz-container">
+            <div id="question-container">
+                <div id="question">Question will appear here</div>
+                <div class="options">
+                    <button class="option">Option 1</button>
+                    <button class="option">Option 2</button>
+                    <button class="option">Option 3</button>
+                    <button class="option">Option 4</button>
+                </div>
+            </div>
+            <div id="navigation">
+                <button id="previous">Previous</button>
+                <button id="next">Next</button>
+                <button id="submit">Submit</button>
+            </div>
+            <div id="status">
+                <div id="score">Score: 0</div>
+                <div id="timer">Time: 30:00</div>
+            </div>
+        </div>
+    </div>
+    <script>
+       // script.js
+
+       const questions = [
+    // LL LIST
+    {
+        question: "What does 'LL' stand for in airline terminology?",
+        options: ["List", "Seat Sold", "Arrival", "Ticket Number"],
+        answer: "List"
+    },
+    {
+        question: "What is the meaning of 'LL' in the context of a waitlist?",
+        options: ["Added to Waitlist", "Confirmed", "Seat Sold", "Cancellation"],
+        answer: "Added to Waitlist"
+    },
+    
+    // RQ SEAT ON A REQUEST
+    {
+        question: "What does 'RQ' mean in airline terminology?",
+        options: ["Seat on Request", "Confirmed Seat", "Cancellation", "Child Meal"],
+        answer: "Seat on Request"
+    },
+    
+    // ASAP AS SOON AS POSSIBLE
+    {
+        question: "What does 'ASAP' stand for?",
+        options: ["As Soon As Possible", "Arrival", "Agent", "No Show"],
+        answer: "As Soon As Possible"
+    },
+    
+    // KL/KK WAITLIST CONFIRMED
+    {
+        question: "What does 'KL/KK' indicate?",
+        options: ["Waitlist Confirmed", "Cancelled", "Adult", "Maximum"],
+        answer: "Waitlist Confirmed"
+    },
+    
+    // AUTH AUTHORITY/AUTHORIZATION
+    {
+        question: "What does 'AUTH' stand for?",
+        options: ["Authority/Authorization", "Seat Sold", "Connecting", "Unaccompanied Minor"],
+        answer: "Authority/Authorization"
+    },
+    
+    // SS SEAT SOLD
+    {
+        question: "What does 'SS' mean in airline terminology?",
+        options: ["Seat Sold", "Arrival", "Hold Seat", "Ticket Number"],
+        answer: "Seat Sold"
+    },
+    
+    // CHLD CHILD
+    {
+        question: "What does 'CHLD' stand for?",
+        options: ["Child", "Connecting", "Cancellation", "Infant"],
+        answer: "Child"
+    },
+    
+    // UU/UN UNABLE TO CONFIRM
+    {
+        question: "What does 'UU/UN' indicate?",
+        options: ["Unable to Confirm", "Confirmed Seat", "Agent", "Stop Over"],
+        answer: "Unable to Confirm"
+    },
+    
+    // CHML CHILD MEAL
+    {
+        question: "What does 'CHML' stand for?",
+        options: ["Child Meal", "Adult", "Hold Seat", "Minimum"],
+        answer: "Child Meal"
+    },
+    
+    // WL WAITLIST
+    {
+        question: "What does 'WL' represent?",
+        options: ["Waitlist", "Cancelled", "Seat Sold", "Maximum"],
+        answer: "Waitlist"
+    },
+    
+    // CONX CONNECTING / CONNECTION
+    {
+        question: "What does 'CONX' mean?",
+        options: ["Connecting / Connection", "Subject to Availability", "Unaccompanied Minor", "Document"],
+        answer: "Connecting / Connection"
+    },
+    
+    // SA SUBJECT TO AVAILABILITY
+    {
+        question: "What does 'SA' stand for?",
+        options: ["Subject to Availability", "Seat on Request", "Ticket Number", "No Show"],
+        answer: "Subject to Availability"
+    },
+    
+    // UMM UNACCOMPANIED MINOR
+    {
+        question: "What does 'UMM' indicate?",
+        options: ["Unaccompanied Minor", "Child Meal", "Connecting", "Arrival"],
+        answer: "Unaccompanied Minor"
+    },
+    
+    // NN NEED
+    {
+        question: "What does 'NN' stand for?",
+        options: ["Need", "Hold Seat", "Seat Sold", "Waitlist"],
+        answer: "Need"
+    },
+    
+    // DEP DEPART / DEPARTURE
+    {
+        question: "What does 'DEP' mean in airline terminology?",
+        options: ["Depart / Departure", "Arrival", "Agent", "Maximum"],
+        answer: "Depart / Departure"
+    },
+    
+    // XX CANCELLED
+    {
+        question: "What does 'XX' indicate?",
+        options: ["Cancelled", "Confirmed Seat", "No Show", "Hold Seat"],
+        answer: "Cancelled"
+    },
+    
+    // INF INFANT
+    {
+        question: "What does 'INF' stand for?",
+        options: ["Infant", "Adult", "Document", "Connecting"],
+        answer: "Infant"
+    },
+    
+    // HX HOLD SEAT
+    {
+        question: "What does 'HX' mean?",
+        options: ["Hold Seat", "Connecting", "Unaccompanied Minor", "Seat on Request"],
+        answer: "Hold Seat"
+    },
+    
+    // NOSH NO SHOW
+    {
+        question: "What does 'NOSH' indicate?",
+        options: ["No Show", "Child Meal", "Confirmed", "Depart"],
+        answer: "No Show"
+    },
+    
+    // HL SEAT WAITLIST
+    {
+        question: "What does 'HL' represent?",
+        options: ["Seat Waitlist", "Ticket Number", "Arrival", "Adult"],
+        answer: "Seat Waitlist"
+    },
+    
+    // TKNO TICKET NUMBER
+    {
+        question: "What does 'TKNO' stand for?",
+        options: ["Ticket Number", "Agent", "Cancellation", "Connecting"],
+        answer: "Ticket Number"
+    },
+    
+    // HK HOLD SEAT CONFIRMED
+    {
+        question: "What does 'HK' mean?",
+        options: ["Hold Seat Confirmed", "Cancelled", "Waitlist", "No Show"],
+        answer: "Hold Seat Confirmed"
+    },
+    
+    // STVR STOP OVER
+    {
+        question: "What does 'STVR' indicate?",
+        options: ["Stop Over", "Confirmed", "Unaccompanied Minor", "Maximum"],
+        answer: "Stop Over"
+    },
+    
+    // OK CONFIRMED SEAT
+    {
+        question: "What does 'OK' stand for?",
+        options: ["Confirmed Seat", "Hold Seat", "Arrival", "Child Meal"],
+        answer: "Confirmed Seat"
+    },
+    
+    // ACK ACKNOWLEDGE
+    {
+        question: "What does 'ACK' mean?",
+        options: ["Acknowledge", "No Show", "Document", "Connecting"],
+        answer: "Acknowledge"
+    },
+    
+    // ADT ADULT
+    {
+        question: "What does 'ADT' indicate?",
+        options: ["Adult", "Child", "Infant", "Maximum"],
+        answer: "Adult"
+    },
+    
+    // MAX MAXIMUM
+    {
+        question: "What does 'MAX' stand for?",
+        options: ["Maximum", "Unaccompanied Minor", "Child Meal", "Arrival"],
+        answer: "Maximum"
+    },
+    
+    // ADV ADVISED
+    {
+        question: "What does 'ADV' mean?",
+        options: ["Advised", "Cancelled", "Hold Seat", "No Show"],
+        answer: "Advised"
+    },
+    
+    // DOC DOCUMENT
+    {
+        question: "What does 'DOC' stand for?",
+        options: ["Document", "Connecting", "Unaccompanied Minor", "Seat Waitlist"],
+        answer: "Document"
+    },
+    
+    // AGT AGENT
+    {
+        question: "What does 'AGT' mean?",
+        options: ["Agent", "Child Meal", "Ticket Number", "Seat Sold"],
+        answer: "Agent"
+    },
+    
+    // MIN MINIMUM
+    {
+        question: "What does 'MIN' indicate?",
+        options: ["Minimum", "Connecting", "Unaccompanied Minor", "Subject to Availability"],
+        answer: "Minimum"
+    }
+];
+
+
+        let currentQuestionIndex = 0;
+let score = 0;
+let timeRemaining = 1800; // 5 minutes in seconds
+
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+function loadQuestion() {
+
+    const questionElement = document.getElementById('question');
+    const optionElements = document.querySelectorAll('.option');
+
+    const currentQuestion = questions[currentQuestionIndex];
+    questionElement.textContent = currentQuestion.question;
+
+    const shuffledOptions = [...currentQuestion.options];
+    shuffle(shuffledOptions);
+    shuffle(questions)
+    
+
+    optionElements.forEach((optionElement, index) => {
+        optionElement.textContent = shuffledOptions[index];
+        optionElement.onclick = () => {
+            if (shuffledOptions[index] === currentQuestion.answer) {
+                score++;
+                
+            }
+            document.getElementById('score').textContent = `Score: ${score}`;
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            } else {
+                alert(`Quiz completed! Your score is ${score} over ${questions.length}.`);
+            }
+        };
+        optionElement.disabled = false; // Enable option buttons
+    });
+}
+
+function startTimer() {
+    const timerElement = document.getElementById('timer');
+    const interval = setInterval(() => {
+        if (timeRemaining > 0) {
+            timeRemaining--;
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            timerElement.textContent = `Time: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+        } else {
+            clearInterval(interval);
+            disableQuestions();
+            alert(`Time's up! Your final score is ${score} over ${questions.length}.`);
+        }
+    }, 1000);
+}
+
+function disableQuestions() {
+    const optionElements = document.querySelectorAll('.option');
+    optionElements.forEach(optionElement => {
+        optionElement.disabled = true; // Disable option buttons
+    });
+}
+
+document.getElementById('next').onclick = () => {
+    if (currentQuestionIndex < questions.length - 1) {
+        currentQuestionIndex++;
+        loadQuestion();
+    }
+};
+
+document.getElementById('previous').onclick = () => {
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        score--;
+        loadQuestion();
+    }
+};
+
+document.getElementById('submit').onclick = () => {
+    alert(`Quiz completed! Your final score is ${score} over ${questions.length}.`);
+    disableQuestions();
+};
+
+window.onload = () => {
+    loadQuestion();
+    startTimer();
+};
+    </script>
+</body>
+</html>
