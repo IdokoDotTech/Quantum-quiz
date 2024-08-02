@@ -5,7 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>City and Airport Code Quiz</title>
     <link rel="stylesheet" href="styles.css">
-    
+    <style>
+        .option.correct {
+        background-color: green;
+        }
+        .option.incorrect {
+            background-color: red;
+        }
+    </style>
 </head>
 <body>
     <div id="main-container">
@@ -20,7 +27,7 @@
                 </div>
             </div>
             <div id="navigation">
-                <button id="previous">Previous</button>
+                <button id="show-answer">Show Answer</button>
                 <button id="next">Next</button>
                 <button id="submit">Submit</button>
             </div>
@@ -31,456 +38,469 @@
         </div>
     </div>
     <script>
-       // script.js
-
-       const questions = [
-    // ALGERIA
-    {
-        question: "What is the city code for Algiers, Algeria?",
-        options: ["ALG", "ORN", "LAD", "COO"],
-        answer: "ALG"
-    },
-    {
-        question: "What is the city code for Oran, Algeria?",
-        options: ["ORN", "ALG", "LAD", "COO"],
-        answer: "ORN"
-    },
-    // ANGOLA
-    {
-        question: "What is the city code for Luanda, Angola?",
-        options: ["LAD", "ALG", "ORN", "COO"],
-        answer: "LAD"
-    },
-    // BENIN
-    {
-        question: "What is the city code for Cotonou, Benin?",
-        options: ["COO", "LAD", "ALG", "ORN"],
-        answer: "COO"
-    },
-    // BOTSWANA
-    {
-        question: "What is the city code for Gaborone, Botswana?",
-        options: ["GBE", "COO", "LAD", "ORN"],
-        answer: "GBE"
-    },
-    // BURKINA FASO
-    {
-        question: "What is the city code for Ouagadougou, Burkina Faso?",
-        options: ["OUA", "GBE", "COO", "LAD"],
-        answer: "OUA"
-    },
-    // BURUNDI
-    {
-        question: "What is the city code for Bujumbura, Burundi?",
-        options: ["BJM", "OUA", "GBE", "COO"],
-        answer: "BJM"
-    },
-    // CAMEROON
-    {
-        question: "What is the city code for Douala, Cameroon?",
-        options: ["DLA", "BJM", "OUA", "GBE"],
-        answer: "DLA"
-    },
-    // CENTRAL AFRICAN REPUBLIC
-    {
-        question: "What is the city code for Bangui, Central African Republic?",
-        options: ["BGF", "DLA", "BJM", "OUA"],
-        answer: "BGF"
-    },
-    // CHAD
-    {
-        question: "What is the city code for Ndjamena, Chad?",
-        options: ["NDJ", "BGF", "DLA", "BJM"],
-        answer: "NDJ"
-    },
-    // CONGO
-    {
-        question: "What is the city code for Brazzaville, Congo?",
-        options: ["BZV", "NDJ", "BGF", "DLA"],
-        answer: "BZV"
-    },
-    // COTE D' IVOIRE
-    {
-        question: "What is the city code for Abidjan, Cote D' Ivoire?",
-        options: ["ABJ", "BZV", "NDJ", "BGF"],
-        answer: "ABJ"
-    },
-    // DJIBOUTI
-    {
-        question: "What is the city code for Djibouti, Djibouti?",
-        options: ["JIB", "ABJ", "BZV", "NDJ"],
-        answer: "JIB"
-    },
-    // EGYPT
-    {
-        question: "What is the city code for Cairo, Egypt?",
-        options: ["CAI", "JIB", "ABJ", "BZV"],
-        answer: "CAI"
-    },
-    // EQUATORIAL GUINEA
-    {
-        question: "What is the city code for Malabo, Equatorial Guinea?",
-        options: ["SSG", "CAI", "JIB", "ABJ"],
-        answer: "SSG"
-    },
-    // ERITREA
-    {
-        question: "What is the city code for Asmara, Eritrea?",
-        options: ["ASM", "SSG", "CAI", "JIB"],
-        answer: "ASM"
-    },
-    // ETHIOPIA
-    {
-        question: "What is the city code for Addis Ababa, Ethiopia?",
-        options: ["ADD", "ASM", "SSG", "CAI"],
-        answer: "ADD"
-    },
-    // GABON
-    {
-        question: "What is the city code for Libreville, Gabon?",
-        options: ["LBV", "ADD", "ASM", "SSG"],
-        answer: "LBV"
-    },
-    // GAMBIA
-    {
-        question: "What is the city code for Banjul, Gambia?",
-        options: ["BJL", "LBV", "ADD", "ASM"],
-        answer: "BJL"
-    },
-    // GHANA
-    {
-        question: "What is the city code for Accra, Ghana?",
-        options: ["ACC", "BJL", "LBV", "ADD"],
-        answer: "ACC"
-    },
-    // GUINEA
-    {
-        question: "What is the city code for Conakry, Guinea?",
-        options: ["CKY", "ACC", "BJL", "LBV"],
-        answer: "CKY"
-    },
-    // GUINEA-BISSAU
-    {
-        question: "What is the city code for Bissau, Guinea-Bissau?",
-        options: ["BXO", "CKY", "ACC", "BJL"],
-        answer: "BXO"
-    },
-    // KENYA
-    {
-        question: "What is the city code for Mombasa, Kenya?",
-        options: ["MBA", "NBO", "ACC", "CKY"],
-        answer: "MBA"
-    },
-    {
-        question: "What is the city code for Nairobi, Kenya?",
-        options: ["NBO", "MBA", "ACC", "CKY"],
-        answer: "NBO"
-    },
-    // LIBERIA
-    {
-        question: "What is the city code for Monrovia, Liberia?",
-        options: ["MLW", "NBO", "MBA", "ACC"],
-        answer: "MLW"
-    },
-    // LIBYAN ARAB JAMAHIRIYA
-    {
-        question: "What is the city code for Benghazi, Libyan Arab Jamahiriya?",
-        options: ["BEN", "TIP", "MLW", "NBO"],
-        answer: "BEN"
-    },
-    {
-        question: "What is the city code for Tripoli, Libyan Arab Jamahiriya?",
-        options: ["TIP", "BEN", "MLW", "NBO"],
-        answer: "TIP"
-    },
-    // MADAGASCAR
-    {
-        question: "What is the city code for Antananarivo, Madagascar?",
-        options: ["TNR", "TIP", "BEN", "MLW"],
-        answer: "TNR"
-    },
-    // MALAWI
-    {
-        question: "What is the city code for Blantyre, Malawi?",
-        options: ["BLZ", "LLW", "TNR", "TIP"],
-        answer: "BLZ"
-    },
-    {
-        question: "What is the city code for Lilongwe, Malawi?",
-        options: ["LLW", "BLZ", "TNR", "TIP"],
-        answer: "LLW"
-    },
-    // MALI
-    {
-        question: "What is the city code for Bamako, Mali?",
-        options: ["BKO", "LLW", "BLZ", "TNR"],
-        answer: "BKO"
-    },
-    // MAURITANIA
-    {
-        question: "What is the city code for Nouakchott, Mauritania?",
-        options: ["NKC", "BKO", "LLW", "BLZ"],
-        answer: "NKC"
-    },
-    // MAURITIUS
-    {
-        question: "What is the city code for Port Louis, Mauritius?",
-        options: ["MRU", "NKC", "BKO", "LLW"],
-        answer: "MRU"
-    },
-    // MOROCCO
-    {
-        question: "What is the city code for Casablanca, Morocco?",
-        options: ["CAS", "TNG", "MRU", "NKC"],
-        answer: "CAS"
-    },
-    {
-        question: "What is the city code for Tangier, Morocco?",
-        options: ["TNG", "CAS", "MRU", "NKC"],
-        answer: "TNG"
-    },
-    // MOZAMBIQUE
-    {
-        question: "What is the city code for Beira, Mozambique?",
-        options: ["BEW", "MPM", "TNG", "CAS"],
-        answer: "BEW"
-    },
-    {
-        question: "What is the city code for Maputo, Mozambique?",
-        options: ["MPM", "BEW", "TNG", "CAS"],
-        answer: "MPM"
-    },
-    // NAMIBIA
-    {
-        question: "What is the city code for Windhoek, Namibia?",
-        options: ["WDH", "MPM", "BEW", "TNG"],
-        answer: "WDH"
-    },
-    // NIGER
-    {
-        question: "What is the city code for Niamey, Niger?",
-        options: ["NIM", "WDH", "MPM", "BEW"],
-        answer: "NIM"
-    },
-    // NIGERIA
-    {
-        question: "What is the city code for Kano, Nigeria?",
-        options: ["KAN", "LOS", "ABV", "NIM"],
-        answer: "KAN"
-    },
-    {
-        question: "What is the city code for Lagos, Nigeria?",
-        options: ["LOS", "KAN", "ABV", "NIM"],
-        answer: "LOS"
-    },
-    {
-        question: "What is the city code for Abuja, Nigeria?",
-        options: ["ABV", "LOS", "KAN", "NIM"],
-        answer: "ABV"
-    },
-    // REUNION
-    {
-        question: "What is the city code for St. Denis, Reunion?",
-        options: ["RUN", "ABV", "LOS", "KAN"],
-        answer: "RUN"
-    },
-    // RWANDA
-    {
-        question: "What is the city code for Kigali, Rwanda?",
-        options: ["KGL", "RUN", "ABV", "LOS"],
-        answer: "KGL"
-    },
-    // SENEGAL
-    {
-        question: "What is the city code for Dakar, Senegal?",
-        options: ["DKR", "KGL", "RUN", "ABV"],
-        answer: "DKR"
-    },
-    // SEYCHELLES
-    {
-        question: "What is the city code for Mahe, Seychelles?",
-        options: ["SEZ", "DKR", "KGL", "RUN"],
-        answer: "SEZ"
-    },
-    // SIERRA LEONE
-    {
-        question: "What is the city code for Freetown, Sierra Leone?",
-        options: ["FNA", "SEZ", "DKR", "KGL"],
-        answer: "FNA"
-    },
-    // SOMALIA
-    {
-        question: "What is the city code for Mogadishu, Somalia?",
-        options: ["MGQ", "FNA", "SEZ", "DKR"],
-        answer: "MGQ"
-    },
-    // SOUTH AFRICA
-    {
-        question: "What is the city code for Cape Town, South Africa?",
-        options: ["CPT", "DUR", "JNB", "MGQ"],
-        answer: "CPT"
-    },
-    {
-        question: "What is the city code for Durban, South Africa?",
-        options: ["DUR", "CPT", "JNB", "MGQ"],
-        answer: "DUR"
-    },
-    {
-        question: "What is the city code for Johannesburg, South Africa?",
-        options: ["JNB", "DUR", "CPT", "MGQ"],
-        answer: "JNB"
-    },
-    // SUDAN
-    {
-        question: "What is the city code for Khartoum, Sudan?",
-        options: ["KRT", "JNB", "DUR", "CPT"],
-        answer: "KRT"
-    },
-    // TANZANIA
-    {
-        question: "What is the city code for Dar Es Salaam, Tanzania?",
-        options: ["DAR", "KRT", "JNB", "DUR"],
-        answer: "DAR"
-    },
-    // TOGO
-    {
-        question: "What is the city code for Lome, Togo?",
-        options: ["LFW", "DAR", "KRT", "JNB"],
-        answer: "LFW"
-    },
-    // TUNISIA
-    {
-        question: "What is the city code for Tunis, Tunisia?",
-        options: ["TUN", "LFW", "DAR", "KRT"],
-        answer: "TUN"
-    },
-    // UGANDA
-    {
-        question: "What is the city code for Entebbe, Uganda?",
-        options: ["EBB", "TUN", "LFW", "DAR"],
-        answer: "EBB"
-    },
-    // ZAIRE
-    {
-        question: "What is the city code for Kinshasa, Zaire?",
-        options: ["FIH", "FBM", "EBB", "TUN"],
-        answer: "FIH"
-    },
-    {
-        question: "What is the city code for Lubumbashi, Zaire?",
-        options: ["FBM", "FIH", "EBB", "TUN"],
-        answer: "FBM"
-    },
-    // ZAMBIA
-    {
-        question: "What is the city code for Lusaka, Zambia?",
-        options: ["LUN", "FBM", "FIH", "EBB"],
-        answer: "LUN"
-    },
-    {
-        question: "What is the city code for Ndola, Zambia?",
-        options: ["NLA", "LUN", "FBM", "FIH"],
-        answer: "NLA"
-    },
-    // ZIMBABWE
-    {
-        question: "What is the city code for Harare, Zimbabwe?",
-        options: ["HRE", "NLA", "LUN", "FBM"],
-        answer: "HRE"
-    }
-];
+          const questions = [
+        // ALGERIA
+        {
+            question: "What is the city code for Algiers, Algeria?",
+            options: ["ALG", "ORN", "LAD", "COO"],
+            answer: "ALG"
+        },
+        {
+            question: "What is the city code for Oran, Algeria?",
+            options: ["ORN", "ALG", "LAD", "COO"],
+            answer: "ORN"
+        },
+        // ANGOLA
+        {
+            question: "What is the city code for Luanda, Angola?",
+            options: ["LAD", "ALG", "ORN", "COO"],
+            answer: "LAD"
+        },
+        // BENIN
+        {
+            question: "What is the city code for Cotonou, Benin?",
+            options: ["COO", "LAD", "ALG", "ORN"],
+            answer: "COO"
+        },
+        // BOTSWANA
+        {
+            question: "What is the city code for Gaborone, Botswana?",
+            options: ["GBE", "COO", "LAD", "ORN"],
+            answer: "GBE"
+        },
+        // BURKINA FASO
+        {
+            question: "What is the city code for Ouagadougou, Burkina Faso?",
+            options: ["OUA", "GBE", "COO", "LAD"],
+            answer: "OUA"
+        },
+        // BURUNDI
+        {
+            question: "What is the city code for Bujumbura, Burundi?",
+            options: ["BJM", "OUA", "GBE", "COO"],
+            answer: "BJM"
+        },
+        // CAMEROON
+        {
+            question: "What is the city code for Douala, Cameroon?",
+            options: ["DLA", "BJM", "OUA", "GBE"],
+            answer: "DLA"
+        },
+        // CENTRAL AFRICAN REPUBLIC
+        {
+            question: "What is the city code for Bangui, Central African Republic?",
+            options: ["BGF", "DLA", "BJM", "OUA"],
+            answer: "BGF"
+        },
+        // CHAD
+        {
+            question: "What is the city code for Ndjamena, Chad?",
+            options: ["NDJ", "BGF", "DLA", "BJM"],
+            answer: "NDJ"
+        },
+        // CONGO
+        {
+            question: "What is the city code for Brazzaville, Congo?",
+            options: ["BZV", "NDJ", "BGF", "DLA"],
+            answer: "BZV"
+        },
+        // COTE D' IVOIRE
+        {
+            question: "What is the city code for Abidjan, Cote D' Ivoire?",
+            options: ["ABJ", "BZV", "NDJ", "BGF"],
+            answer: "ABJ"
+        },
+        // DJIBOUTI
+        {
+            question: "What is the city code for Djibouti, Djibouti?",
+            options: ["JIB", "ABJ", "BZV", "NDJ"],
+            answer: "JIB"
+        },
+        // EGYPT
+        {
+            question: "What is the city code for Cairo, Egypt?",
+            options: ["CAI", "JIB", "ABJ", "BZV"],
+            answer: "CAI"
+        },
+        // EQUATORIAL GUINEA
+        {
+            question: "What is the city code for Malabo, Equatorial Guinea?",
+            options: ["SSG", "CAI", "JIB", "ABJ"],
+            answer: "SSG"
+        },
+        // ERITREA
+        {
+            question: "What is the city code for Asmara, Eritrea?",
+            options: ["ASM", "SSG", "CAI", "JIB"],
+            answer: "ASM"
+        },
+        // ETHIOPIA
+        {
+            question: "What is the city code for Addis Ababa, Ethiopia?",
+            options: ["ADD", "ASM", "SSG", "CAI"],
+            answer: "ADD"
+        },
+        // GABON
+        {
+            question: "What is the city code for Libreville, Gabon?",
+            options: ["LBV", "ADD", "ASM", "SSG"],
+            answer: "LBV"
+        },
+        // GAMBIA
+        {
+            question: "What is the city code for Banjul, Gambia?",
+            options: ["BJL", "LBV", "ADD", "ASM"],
+            answer: "BJL"
+        },
+        // GHANA
+        {
+            question: "What is the city code for Accra, Ghana?",
+            options: ["ACC", "BJL", "LBV", "ADD"],
+            answer: "ACC"
+        },
+        // GUINEA
+        {
+            question: "What is the city code for Conakry, Guinea?",
+            options: ["CKY", "ACC", "BJL", "LBV"],
+            answer: "CKY"
+        },
+        // GUINEA-BISSAU
+        {
+            question: "What is the city code for Bissau, Guinea-Bissau?",
+            options: ["BXO", "CKY", "ACC", "BJL"],
+            answer: "BXO"
+        },
+        // KENYA
+        {
+            question: "What is the city code for Mombasa, Kenya?",
+            options: ["MBA", "NBO", "ACC", "CKY"],
+            answer: "MBA"
+        },
+        {
+            question: "What is the city code for Nairobi, Kenya?",
+            options: ["NBO", "MBA", "ACC", "CKY"],
+            answer: "NBO"
+        },
+        // LIBERIA
+        {
+            question: "What is the city code for Monrovia, Liberia?",
+            options: ["MLW", "NBO", "MBA", "ACC"],
+            answer: "MLW"
+        },
+        // LIBYAN ARAB JAMAHIRIYA
+        {
+            question: "What is the city code for Benghazi, Libyan Arab Jamahiriya?",
+            options: ["BEN", "TIP", "MLW", "NBO"],
+            answer: "BEN"
+        },
+        {
+            question: "What is the city code for Tripoli, Libyan Arab Jamahiriya?",
+            options: ["TIP", "BEN", "MLW", "NBO"],
+            answer: "TIP"
+        },
+        // MADAGASCAR
+        {
+            question: "What is the city code for Antananarivo, Madagascar?",
+            options: ["TNR", "TIP", "BEN", "MLW"],
+            answer: "TNR"
+        },
+        // MALAWI
+        {
+            question: "What is the city code for Blantyre, Malawi?",
+            options: ["BLZ", "LLW", "TNR", "TIP"],
+            answer: "BLZ"
+        },
+        {
+            question: "What is the city code for Lilongwe, Malawi?",
+            options: ["LLW", "BLZ", "TNR", "TIP"],
+            answer: "LLW"
+        },
+        // MALI
+        {
+            question: "What is the city code for Bamako, Mali?",
+            options: ["BKO", "LLW", "BLZ", "TNR"],
+            answer: "BKO"
+        },
+        // MAURITANIA
+        {
+            question: "What is the city code for Nouakchott, Mauritania?",
+            options: ["NKC", "BKO", "LLW", "BLZ"],
+            answer: "NKC"
+        },
+        // MAURITIUS
+        {
+            question: "What is the city code for Port Louis, Mauritius?",
+            options: ["MRU", "NKC", "BKO", "LLW"],
+            answer: "MRU"
+        },
+        // MOROCCO
+        {
+            question: "What is the city code for Casablanca, Morocco?",
+            options: ["CAS", "TNG", "MRU", "NKC"],
+            answer: "CAS"
+        },
+        {
+            question: "What is the city code for Tangier, Morocco?",
+            options: ["TNG", "CAS", "MRU", "NKC"],
+            answer: "TNG"
+        },
+        // MOZAMBIQUE
+        {
+            question: "What is the city code for Beira, Mozambique?",
+            options: ["BEW", "MPM", "TNG", "CAS"],
+            answer: "BEW"
+        },
+        {
+            question: "What is the city code for Maputo, Mozambique?",
+            options: ["MPM", "BEW", "TNG", "CAS"],
+            answer: "MPM"
+        },
+        // NAMIBIA
+        {
+            question: "What is the city code for Windhoek, Namibia?",
+            options: ["WDH", "MPM", "BEW", "TNG"],
+            answer: "WDH"
+        },
+        // NIGER
+        {
+            question: "What is the city code for Niamey, Niger?",
+            options: ["NIM", "WDH", "MPM", "BEW"],
+            answer: "NIM"
+        },
+        // NIGERIA
+        {
+            question: "What is the city code for Kano, Nigeria?",
+            options: ["KAN", "LOS", "ABV", "NIM"],
+            answer: "KAN"
+        },
+        {
+            question: "What is the city code for Lagos, Nigeria?",
+            options: ["LOS", "KAN", "ABV", "NIM"],
+            answer: "LOS"
+        },
+        {
+            question: "What is the city code for Abuja, Nigeria?",
+            options: ["ABV", "LOS", "KAN", "NIM"],
+            answer: "ABV"
+        },
+        // REUNION
+        {
+            question: "What is the city code for St. Denis, Reunion?",
+            options: ["RUN", "ABV", "LOS", "KAN"],
+            answer: "RUN"
+        },
+        // RWANDA
+        {
+            question: "What is the city code for Kigali, Rwanda?",
+            options: ["KGL", "RUN", "ABV", "LOS"],
+            answer: "KGL"
+        },
+        // SENEGAL
+        {
+            question: "What is the city code for Dakar, Senegal?",
+            options: ["DKR", "KGL", "RUN", "ABV"],
+            answer: "DKR"
+        },
+        // SEYCHELLES
+        {
+            question: "What is the city code for Mahe, Seychelles?",
+            options: ["SEZ", "DKR", "KGL", "RUN"],
+            answer: "SEZ"
+        },
+        // SIERRA LEONE
+        {
+            question: "What is the city code for Freetown, Sierra Leone?",
+            options: ["FNA", "SEZ", "DKR", "KGL"],
+            answer: "FNA"
+        },
+        // SOMALIA
+        {
+            question: "What is the city code for Mogadishu, Somalia?",
+            options: ["MGQ", "FNA", "SEZ", "DKR"],
+            answer: "MGQ"
+        },
+        // SOUTH AFRICA
+        {
+            question: "What is the city code for Cape Town, South Africa?",
+            options: ["CPT", "DUR", "JNB", "MGQ"],
+            answer: "CPT"
+        },
+        {
+            question: "What is the city code for Durban, South Africa?",
+            options: ["DUR", "CPT", "JNB", "MGQ"],
+            answer: "DUR"
+        },
+        {
+            question: "What is the city code for Johannesburg, South Africa?",
+            options: ["JNB", "DUR", "CPT", "MGQ"],
+            answer: "JNB"
+        },
+        // SUDAN
+        {
+            question: "What is the city code for Khartoum, Sudan?",
+            options: ["KRT", "JNB", "DUR", "CPT"],
+            answer: "KRT"
+        },
+        // TANZANIA
+        {
+            question: "What is the city code for Dar Es Salaam, Tanzania?",
+            options: ["DAR", "KRT", "JNB", "DUR"],
+            answer: "DAR"
+        },
+        // TOGO
+        {
+            question: "What is the city code for Lome, Togo?",
+            options: ["LFW", "DAR", "KRT", "JNB"],
+            answer: "LFW"
+        },
+        // TUNISIA
+        {
+            question: "What is the city code for Tunis, Tunisia?",
+            options: ["TUN", "LFW", "DAR", "KRT"],
+            answer: "TUN"
+        },
+        // UGANDA
+        {
+            question: "What is the city code for Entebbe, Uganda?",
+            options: ["EBB", "TUN", "LFW", "DAR"],
+            answer: "EBB"
+        },
+        // ZAIRE
+        {
+            question: "What is the city code for Kinshasa, Zaire?",
+            options: ["FIH", "FBM", "EBB", "TUN"],
+            answer: "FIH"
+        },
+        {
+            question: "What is the city code for Lubumbashi, Zaire?",
+            options: ["FBM", "FIH", "EBB", "TUN"],
+            answer: "FBM"
+        },
+        // ZAMBIA
+        {
+            question: "What is the city code for Lusaka, Zambia?",
+            options: ["LUN", "FBM", "FIH", "EBB"],
+            answer: "LUN"
+        },
+        {
+            question: "What is the city code for Ndola, Zambia?",
+            options: ["NLA", "LUN", "FBM", "FIH"],
+            answer: "NLA"
+        },
+        // ZIMBABWE
+        {
+            question: "What is the city code for Harare, Zimbabwe?",
+            options: ["HRE", "NLA", "LUN", "FBM"],
+            answer: "HRE"
+        }
+    ];
 
 
         let currentQuestionIndex = 0;
-let score = 0;
-let timeRemaining = 1800; // 5 minutes in seconds
+        let score = 0;
+        let timeRemaining = 1800; // 30 minutes in seconds
+        let questionsSeen = new Set();
 
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-}
-
-function loadQuestion() {
-
-    const questionElement = document.getElementById('question');
-    const optionElements = document.querySelectorAll('.option');
-
-    const currentQuestion = questions[currentQuestionIndex];
-    questionElement.textContent = currentQuestion.question;
-
-    const shuffledOptions = [...currentQuestion.options];
-    shuffle(shuffledOptions);
-    shuffle(questions)
-    
-
-    optionElements.forEach((optionElement, index) => {
-        optionElement.textContent = shuffledOptions[index];
-        optionElement.onclick = () => {
-            if (shuffledOptions[index] === currentQuestion.answer) {
-                score++;
-                
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
-            document.getElementById('score').textContent = `Score: ${score}`;
-            if (currentQuestionIndex < questions.length - 1) {
-                currentQuestionIndex++;
+        }
+
+        function loadQuestion() {
+            const questionElement = document.getElementById('question');
+            const optionElements = document.querySelectorAll('.option');
+
+            while (questionsSeen.has(currentQuestionIndex)) {
+                currentQuestionIndex = Math.floor(Math.random() * questions.length);
+            }
+            questionsSeen.add(currentQuestionIndex);
+
+            const currentQuestion = questions[currentQuestionIndex];
+            questionElement.textContent = currentQuestion.question;
+
+            const shuffledOptions = [...currentQuestion.options];
+            shuffle(shuffledOptions);
+
+            optionElements.forEach((optionElement, index) => {
+                optionElement.textContent = shuffledOptions[index];
+                optionElement.className = 'option'; // Reset classes
+                optionElement.onclick = () => handleOptionClick(optionElement, shuffledOptions[index] === currentQuestion.answer);
+                optionElement.disabled = false; // Enable option buttons
+            });
+        }
+
+        function handleOptionClick(optionElement, isCorrect) {
+            if (isCorrect) {
+                score++;
+                document.getElementById('score').textContent = `Score: ${score}`;
+                optionElement.classList.add('correct');
+            } else {
+                optionElement.classList.add('incorrect');
+            }
+            setTimeout(() => {
+                optionElement.classList.remove('correct', 'incorrect');
+                if (questionsSeen.size < questions.length) {
+                    loadQuestion();
+                } else {
+                    alert(`Quiz completed! Your score is ${score} over ${questions.length}.`);
+                }
+            }, 1000);
+        }
+
+        function startTimer() {
+            const timerElement = document.getElementById('timer');
+            const interval = setInterval(() => {
+                if (timeRemaining > 0) {
+                    timeRemaining--;
+                    const minutes = Math.floor(timeRemaining / 60);
+                    const seconds = timeRemaining % 60;
+                    timerElement.textContent = `Time: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                } else {
+                    clearInterval(interval);
+                    disableQuestions();
+                    alert(`Time's up! Your final score is ${score} over ${questions.length}.`);
+                }
+            }, 1000);
+        }
+
+        function disableQuestions() {
+            const optionElements = document.querySelectorAll('.option');
+            optionElements.forEach(optionElement => {
+                optionElement.disabled = true; // Disable option buttons
+            });
+        }
+
+        document.getElementById('next').onclick = () => {
+            if (questionsSeen.size < questions.length) {
                 loadQuestion();
             } else {
-                alert(`Quiz completed! Your score is ${score} over ${questions.length}.`);
+                alert('All questions have been answered.');
             }
         };
-        optionElement.disabled = false; // Enable option buttons
-    });
-}
 
-function startTimer() {
-    const timerElement = document.getElementById('timer');
-    const interval = setInterval(() => {
-        if (timeRemaining > 0) {
-            timeRemaining--;
-            const minutes = Math.floor(timeRemaining / 60);
-            const seconds = timeRemaining % 60;
-            timerElement.textContent = `Time: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        } else {
-            clearInterval(interval);
+        document.getElementById('show-answer').onclick = () => {
+            const currentQuestion = questions[currentQuestionIndex];
+            const optionElements = document.querySelectorAll('.option');
+            optionElements.forEach(optionElement => {
+                if (optionElement.textContent === currentQuestion.answer) {
+                    optionElement.classList.add('correct');
+                }
+                optionElement.disabled = true;
+            });
+        };
+
+        document.getElementById('submit').onclick = () => {
+            alert(`Quiz completed! Your final score is ${score} over ${questions.length}.`);
             disableQuestions();
-            alert(`Time's up! Your final score is ${score} over ${questions.length}.`);
-        }
-    }, 1000);
-}
+        };
 
-function disableQuestions() {
-    const optionElements = document.querySelectorAll('.option');
-    optionElements.forEach(optionElement => {
-        optionElement.disabled = true; // Disable option buttons
-    });
-}
-
-document.getElementById('next').onclick = () => {
-    if (currentQuestionIndex < questions.length - 1) {
-        currentQuestionIndex++;
-        loadQuestion();
-    }
-};
-
-document.getElementById('previous').onclick = () => {
-    if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        score--;
-        loadQuestion();
-    }
-};
-
-document.getElementById('submit').onclick = () => {
-    alert(`Quiz completed! Your final score is ${score} over ${questions.length}.`);
-    disableQuestions();
-};
-
-window.onload = () => {
-    loadQuestion();
-    startTimer();
-};
+        window.onload = () => {
+            shuffle(questions);
+            loadQuestion();
+            startTimer();
+        };
     </script>
 </body>
 </html>

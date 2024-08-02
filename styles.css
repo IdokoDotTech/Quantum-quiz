@@ -72,9 +72,6 @@ body {
         text-decoration: none;
     }
     
-    button:hover {
-        background-color: #6A0DAD; /* Darker purple color for hover effect */
-    }
     
     footer {
         background-color: #8A2BE2; /* BlueViolet color for footer background */

@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>City and Airport Code Quiz</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .option.correct {
+        background-color: green;
+        }
+        .option.incorrect {
+            background-color: red;
+        }
+    </style>
     
 </head>
 <body>
@@ -20,7 +28,7 @@
                 </div>
             </div>
             <div id="navigation">
-                <button id="previous">Previous</button>
+                <button id="show-answer">Show Answer</button>
                 <button id="next">Next</button>
                 <button id="submit">Submit</button>
             </div>
@@ -140,95 +148,110 @@
 ];
 
         let currentQuestionIndex = 0;
-let score = 0;
-let timeRemaining = 1800; // 5 minutes in seconds
+        let score = 0;
+        let timeRemaining = 1800; // 30 minutes in seconds
+        let questionsSeen = new Set();
 
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-}
-
-function loadQuestion() {
-
-    const questionElement = document.getElementById('question');
-    const optionElements = document.querySelectorAll('.option');
-
-    const currentQuestion = questions[currentQuestionIndex];
-    questionElement.textContent = currentQuestion.question;
-
-    const shuffledOptions = [...currentQuestion.options];
-    shuffle(shuffledOptions);
-    shuffle(questions)
-    
-
-    optionElements.forEach((optionElement, index) => {
-        optionElement.textContent = shuffledOptions[index];
-        optionElement.onclick = () => {
-            if (shuffledOptions[index] === currentQuestion.answer) {
-                score++;
-                
+        function shuffle(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
             }
-            document.getElementById('score').textContent = `Score: ${score}`;
-            if (currentQuestionIndex < questions.length - 1) {
-                currentQuestionIndex++;
+        }
+
+        function loadQuestion() {
+            const questionElement = document.getElementById('question');
+            const optionElements = document.querySelectorAll('.option');
+
+            while (questionsSeen.has(currentQuestionIndex)) {
+                currentQuestionIndex = Math.floor(Math.random() * questions.length);
+            }
+            questionsSeen.add(currentQuestionIndex);
+
+            const currentQuestion = questions[currentQuestionIndex];
+            questionElement.textContent = currentQuestion.question;
+
+            const shuffledOptions = [...currentQuestion.options];
+            shuffle(shuffledOptions);
+
+            optionElements.forEach((optionElement, index) => {
+                optionElement.textContent = shuffledOptions[index];
+                optionElement.className = 'option'; // Reset classes
+                optionElement.onclick = () => handleOptionClick(optionElement, shuffledOptions[index] === currentQuestion.answer);
+                optionElement.disabled = false; // Enable option buttons
+            });
+        }
+
+        function handleOptionClick(optionElement, isCorrect) {
+            if (isCorrect) {
+                score++;
+                document.getElementById('score').textContent = `Score: ${score}`;
+                optionElement.classList.add('correct');
+            } else {
+                optionElement.classList.add('incorrect');
+            }
+            setTimeout(() => {
+                optionElement.classList.remove('correct', 'incorrect');
+                if (questionsSeen.size < questions.length) {
+                    loadQuestion();
+                } else {
+                    alert(`Quiz completed! Your score is ${score} over ${questions.length}.`);
+                }
+            }, 1000);
+        }
+
+        function startTimer() {
+            const timerElement = document.getElementById('timer');
+            const interval = setInterval(() => {
+                if (timeRemaining > 0) {
+                    timeRemaining--;
+                    const minutes = Math.floor(timeRemaining / 60);
+                    const seconds = timeRemaining % 60;
+                    timerElement.textContent = `Time: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                } else {
+                    clearInterval(interval);
+                    disableQuestions();
+                    alert(`Time's up! Your final score is ${score} over ${questions.length}.`);
+                }
+            }, 1000);
+        }
+
+        function disableQuestions() {
+            const optionElements = document.querySelectorAll('.option');
+            optionElements.forEach(optionElement => {
+                optionElement.disabled = true; // Disable option buttons
+            });
+        }
+
+        document.getElementById('next').onclick = () => {
+            if (questionsSeen.size < questions.length) {
                 loadQuestion();
             } else {
-                alert(`Quiz completed! Your score is ${score} over ${questions.length}.`);
+                alert('All questions have been answered.');
             }
         };
-        optionElement.disabled = false; // Enable option buttons
-    });
-}
 
-function startTimer() {
-    const timerElement = document.getElementById('timer');
-    const interval = setInterval(() => {
-        if (timeRemaining > 0) {
-            timeRemaining--;
-            const minutes = Math.floor(timeRemaining / 60);
-            const seconds = timeRemaining % 60;
-            timerElement.textContent = `Time: ${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
-        } else {
-            clearInterval(interval);
+        document.getElementById('show-answer').onclick = () => {
+            const currentQuestion = questions[currentQuestionIndex];
+            const optionElements = document.querySelectorAll('.option');
+            optionElements.forEach(optionElement => {
+                if (optionElement.textContent === currentQuestion.answer) {
+                    optionElement.classList.add('correct');
+                }
+                optionElement.disabled = true;
+            });
+        };
+
+        document.getElementById('submit').onclick = () => {
+            alert(`Quiz completed! Your final score is ${score} over ${questions.length}.`);
             disableQuestions();
-            alert(`Time's up! Your final score is ${score} over ${questions.length}.`);
-        }
-    }, 1000);
-}
+        };
 
-function disableQuestions() {
-    const optionElements = document.querySelectorAll('.option');
-    optionElements.forEach(optionElement => {
-        optionElement.disabled = true; // Disable option buttons
-    });
-}
-
-document.getElementById('next').onclick = () => {
-    if (currentQuestionIndex < questions.length - 1) {
-        currentQuestionIndex++;
-        loadQuestion();
-    }
-};
-
-document.getElementById('previous').onclick = () => {
-    if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        score--;
-        loadQuestion();
-    }
-};
-
-document.getElementById('submit').onclick = () => {
-    alert(`Quiz completed! Your final score is ${score} over ${questions.length}.`);
-    disableQuestions();
-};
-
-window.onload = () => {
-    loadQuestion();
-    startTimer();
-};
+        window.onload = () => {
+            shuffle(questions);
+            loadQuestion();
+            startTimer();
+        };
     </script>
 </body>
 </html>
